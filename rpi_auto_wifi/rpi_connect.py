@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import logging
+import logging.handlers
 
 from . import wpa_util
 
@@ -12,7 +13,7 @@ logger.setLevel(logging.DEBUG)
 
 
 if os.geteuid()==0:
-    sh = logging.SyslogHandler()
+    sh = logging.SysLogHandler()
 else:
     sh = logging.StreamHandler()
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')

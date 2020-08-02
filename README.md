@@ -19,7 +19,7 @@ Misc logging logged to syslog
 rpi-auto-wifi is distributed on [PyPI](https://pypi.org) as a universal wheel and is available on Linux/macOS and Windows and supports Python 2.7/3.5+ and PyPy.
 
 ```{.sourceCode .bash}
-$ sudo pip3 install https://github.com/drmikecrowe/rpi-auto-wifi.git
+$ sudo pip3 install https://github.com/drmikecrowe/rpi-auto-wifi/archive/master.zip
 ```
 
 Because this is expected to run as root, install via pip as root.
@@ -27,7 +27,7 @@ Because this is expected to run as root, install via pip as root.
 ## Expected usage:
 
 ```
-sudo python3 -m rpi_auto_wifi
+sudo python3 -m rpi_auto_wifi.rpi_connect
 if [ "$?" != "0" ]; then
     shutdown -r now
 fi
