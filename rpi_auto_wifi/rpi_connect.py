@@ -13,7 +13,7 @@ logger.setLevel(logging.DEBUG)
 
 
 if os.geteuid()==0:
-    sh = logging.handlers.SysLogHandler()
+    sh = logging.handlers.SysLogHandler("/dev/log")
 else:
     sh = logging.handlers.StreamHandler()
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
