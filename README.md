@@ -1,25 +1,44 @@
-# wpa_util
-python toolkit for wpa_supplicant suits 
+# rpi-auto-wifi
 
-## Based on wpa_cli
-wpa_util provides high level wifi managment python interface based on wpa_cli, componet of famous linux wireless tool wpa_supplicant.
-In order to use this you need ensure wpa_supplicant has been installed correctly on you platform.
+## Raspberry Pi Wifi Auto-Connect for Headless Systems
 
-# Who need it
-wpa_util solves wireless network management problem on the non-standards linux distribution or mature mobile os such as android/ios.
+An extension of [wpa_util](https://github.com/jingsong-liu/wpa_util)
 
-# Quick Start
-* To scan wireless networks
-```python
-import wpa_util
-scan_r = wpa_util.WifiUtil.scan_network()
+A very RPi specific connection algorythm:
+
+-   First test if wpa_supplicant reconnected us
+-   Next, check if we can force a reconnect
+-   Next, try and connect to any open networks
+-   Next, try and connect to any network where WPS is enabled
+-   Wait 6s and repeat for 1m
+
+Misc logging logged to syslog
+
+## Installation
+
+rpi-auto-wifi is distributed on [PyPI](https://pypi.org) as a universal wheel and is available on Linux/macOS and Windows and supports Python 2.7/3.5+ and PyPy.
+
+```{.sourceCode .bash}
+$ sudo pip3 install rpi-auto-wifi
 ```
-* To add a new wifi connection
-```python
-wpa_util.WifiUtil.add_network(ssid, password)
+
+Because this is expected to run as root, install via pip as root.
+
+## License
+
+rpi-auto-wifi is distributed under the terms of both
+
+-   [MIT License](https://choosealicense.com/licenses/mit)
+
+## Expected usage:
+
+```
+sudo python3 -m rpi_auto_wifi
+if [ "$?" != "0" ]; then
+    shutdown -r now
+fi
 ```
 
-The ptyhon version is required 3.5+
+## TESTING
 
-# Contribution
-Issues or PR are welcomed to be submitted, I will reply as soon as I can.
+NOTE: Testing is only half-baked at the moment
