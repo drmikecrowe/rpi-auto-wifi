@@ -13,9 +13,9 @@ logger.setLevel(logging.DEBUG)
 
 
 if os.geteuid()==0:
-    sh = logging.SysLogHandler()
+    sh = logging.handlers.SysLogHandler()
 else:
-    sh = logging.StreamHandler()
+    sh = logging.handlers.StreamHandler()
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     sh.setFormatter(formatter)
 
