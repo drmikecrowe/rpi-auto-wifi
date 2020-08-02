@@ -1,0 +1,13 @@
+bssid=1c:5f:2b:c5:71:f0
+freq=2412
+ssid=Crowe
+id=1
+mode=station
+pairwise_cipher=CCMP
+group_cipher=TKIP
+key_mgmt=WPA2-PSK
+wpa_state=COMPLETED
+ip_address=192.168.0.153
+p2p_device_address=22:0c:aa:70:21:b9
+address=b8:27:eb:28:37:95
+uuid=90171cdf-079b-541b-96e1-d0a783db5fea

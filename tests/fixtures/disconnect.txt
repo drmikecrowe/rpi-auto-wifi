@@ -1,0 +1,3 @@
+OK
+<3>CTRL-EVENT-DISCONNECTED bssid=60:d2:48:04:f8:f5 reason=3 locally_generated=1
+<3>CTRL-EVENT-REGDOM-CHANGE init=CORE type=WORLD

@@ -1,0 +1,9 @@
+OK
+<3>CTRL-EVENT-SCAN-STARTED
+<3>CTRL-EVENT-SCAN-RESULTS
+<3>WPS-AP-AVAILABLE
+<3>Trying to associate with SSID 'Crowe'
+<3>Associated with 60:d2:48:04:f8:f5
+<3>CTRL-EVENT-CONNECTED - Connection to 60:d2:48:04:f8:f5 completed [id=0 id_str=]
+<3>CTRL-EVENT-SUBNET-STATUS-UPDATE status=0
+<3>CTRL-EVENT-REGDOM-CHANGE init=COUNTRY_IE type=COUNTRY alpha2=US

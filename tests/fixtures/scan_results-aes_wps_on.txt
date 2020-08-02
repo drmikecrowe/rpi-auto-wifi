@@ -1,0 +1,2 @@
+bssid / frequency / signal level / flags / ssid
+62:d2:48:04:f8:a5	2462	-44	[WPA2-PSK-CCMP][ESS][WPS-PBC]	test

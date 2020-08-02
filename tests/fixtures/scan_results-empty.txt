@@ -1,0 +1,1 @@
+bssid / frequency / signal level / flags / ssid
