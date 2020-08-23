@@ -78,12 +78,11 @@ class WifiUtil:
         ok, cmplt_proc = WpaHelper.command(WPA_CMD.ADD_NETWORK)
         if ok:
             network_id = cmplt_proc.stdout.splitlines()[0]
-            if password:
-                ok = cls.set_network(network_id, ssid, password)
-                if not ok:
-                    cls.del_network(network_id)
-                    network_id = None
-
+            ok = cls.set_network(network_id, ssid, password)
+            if not ok:
+                cls.del_network(network_id)
+                network_id = None
+        print(ok, cmplt_proc, network_id)
         return network_id
 
     @classmethod
@@ -98,16 +97,29 @@ class WifiUtil:
             ok = WpaHelper.command(
                 WPA_CMD.SET_NETWORK, network_id, "ssid", '"' + ssid + '"'
             )[0]
-        if ok and password:
-            ok = WpaHelper.command(
-                WPA_CMD.SET_PASSWORD, network_id, '"' + password + '"'
-            )[0]
+        if ok:
+            if password:
+                ok = WpaHelper.command(
+                    WPA_CMD.SET_PASSWORD, network_id, '"' + password + '"'
+                )[0]
+            else:
+                ok = WpaHelper.command(
+                    WPA_CMD.SET_NETWORK, network_id, 'key_mgmt', 'NONE'
+                )[0]
 
         return ok
 
     @classmethod
+    def save_config(cls):
+        ok, _ = WpaHelper.command(WPA_CMD.SAVE_CONFIG)
+        return ok
+
+    @classmethod
     def enable_network(cls, network_id, enable=True):
-        ok = WpaHelper.command(WPA_CMD.ENABLE_NETWORK, network_id, enable)[0]
+        if enable:
+            ok, _ = WpaHelper.command(WPA_CMD.ENABLE_NETWORK, network_id)
+        else:
+            ok, _ = WpaHelper.command(WPA_CMD.DISABLE_NETWORK, network_id)
         return ok
 
     @classmethod
@@ -303,6 +315,7 @@ class WPA_CMD:
     SET_PASSWORD = "password"
     WPS_CONNECT = "wps_pbc"
     RECONNECT = "reconnect"
+    SAVE_CONFIG = "save_config"
 
     SCAN = "scan"
     SCAN_RESULT = "scan_results"
