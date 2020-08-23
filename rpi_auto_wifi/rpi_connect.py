@@ -11,17 +11,18 @@ from . import wpa_util
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+rootLogger = logging.getLogger()
 
 if os.geteuid()==0:
     sh = logging.handlers.SysLogHandler("/dev/log")
-else:
-    sh = logging.handlers.StreamHandler()
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    sh.setFormatter(formatter)
+    sh.setLevel(logging.DEBUG)
+    logger.addHandler(sh)
 
+sh = logging.StreamHandler(sys.stdout)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+sh.setFormatter(formatter)
 sh.setLevel(logging.DEBUG)
-logger.addHandler(sh)
-
+rootLogger.addHandler(sh)
 
 RETRIES = 10
 WAIT = 6
@@ -33,6 +34,7 @@ def check_connected():
     logger.debug("conn_status" + repr([ok, status]))
     if ok and status["wpa_state"] != "DISCONNECTED":
         logger.info("Connected!")
+        wpa_util.WifiUtil.save_config()
         return True
 
 
@@ -45,7 +47,13 @@ def try_open():
         return
     for ap in status:
         if ap["flags"].find("WPA") == -1:
-            wpa_util.WifiUtil.add_network(ap["ssid"])
+            net_id = None
+            net_ids = wpa_util.WifiUtil.get_network(ssid=ap["ssid"])
+            if len(net_ids) > 0:
+                net_id = net_ids[0]["network id"] if "network id" in net_ids[0] else None
+            if not net_id:
+                net_id = wpa_util.WifiUtil.add_network(ap["ssid"])
+            wpa_util.WifiUtil.enable_network(net_id)
             if try_reconnect():
                 return True
 
